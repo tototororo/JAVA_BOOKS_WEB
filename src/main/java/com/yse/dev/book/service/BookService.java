@@ -68,22 +68,23 @@ public class BookService {
 		//페이지 컨트롤
 		if (page == null) {
 			page = 0;
-		} // pageble 객체는 1페이지가 0부터 시작이니 맞춰주기
+		} // page 객체는 1페이지가 0부터 시작이니 맞춰주기
 		else {
 			page -= 1;
 		}
-	
+		// page 객체 생성
 		Pageable pageable = PageRequest.of(page, pageSize, Direction.DESC, "insertDateTime");
-		Page<Book> books = bookRepository.findAll(pageable);
-	    
-	    // DTO 생성 및 설정
-		BookListResponseDTO bookListResponseDTO = new BookListResponseDTO();
-		bookListResponseDTO.setCurrentPage(books.getNumber());
-		bookListResponseDTO.setTotalPages(books.getTotalPages());
-		bookListResponseDTO.setItems(books.getContent());
-    
-		return bookListResponseDTO;
-
+		Page<Book> books;
+		//검색 분기
+		if (title == null) {		
+			books = this.bookRepository.findAll(pageable);
+		} else {	
+			books = this.bookRepository.findByTitleContains(title, pageable);
+		}
+		 // DTO 생성 및 설정
+		BookListResponseDTO bookListResponseDTO = new BookListResponseDTO(books.getNumber(),books.getTotalPages(),books.getContent());
+		
+		return  bookListResponseDTO;
 	}
 
 }
