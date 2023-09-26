@@ -101,7 +101,7 @@ public class BookController {
 	////////////////////////////////////////////////////////////
 	//첵 삭제 기능
 	@PostMapping("/book/delete")
-	//매개변수가 하나뿐 일 땐 DTO를 안 만들어도 됨. 
+	//매개변수가 하나뿐이라 DTO무 필요. 
 	public String delete(Integer bookId) throws NoSuchElementException{
 		this.bookService.delete(bookId);
 		return "redirect:/book/list";
@@ -110,8 +110,8 @@ public class BookController {
 	//책 목록 페이지
 	//두 개의 포인트에 맵핑
 	@GetMapping(value= {"/book/list", "/book"})
-	public ModelAndView  bookList(Integer page, ModelAndView mav){
-		BookListResponseDTO books = this.bookService.bookList(page);
+	public ModelAndView  bookList(String title, Integer page, ModelAndView mav){
+		BookListResponseDTO books = this.bookService.bookList(title, page);
 		mav.addObject("books", books);
 		mav.setViewName("/book/list");
 	    return mav;
