@@ -110,8 +110,8 @@ public class BookController {
 	//책 목록 페이지
 	//두 개의 포인트에 맵핑
 	@GetMapping(value= {"/book/list", "/book"})
-	public ModelAndView  bookList(String title, Integer page, ModelAndView mav){
-		BookListResponseDTO books = this.bookService.bookList(title, page);
+	public ModelAndView  bookList(Integer page, ModelAndView mav){
+		BookListResponseDTO books = this.bookService.bookList(page);
 		mav.addObject("books", books);
 		mav.setViewName("/book/list");
 	    return mav;
