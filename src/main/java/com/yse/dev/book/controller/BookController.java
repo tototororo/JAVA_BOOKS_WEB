@@ -113,6 +113,7 @@ public class BookController {
 	public ModelAndView  bookList(String title, Integer page, ModelAndView mav){
 		BookListResponseDTO books = this.bookService.bookList(title, page);
 		mav.addObject("books", books);
+		mav.setViewName("/book/list");
 	    return mav;
 	}
 
